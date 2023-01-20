@@ -47,5 +47,26 @@ sysout.out.prinln("hello world");
 
 # 이미지
 
-링크 표시 앞에 '!'를 붙이면 
+링크 표시 앞에 '!'를 붙이면 이미지 표시
 ![옥토캣](https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/543V/image/mdDAJAz7IwslIBY_piBkpgocZVA.PNG)
+
+# 목록 표시
+
+순서가 없는 리스트(unorder list)는 대시(`-`)를 사용하여 구현합니다.
+
+- 첫 번째 항목
+    - 세부항목 1
+    - 세부항목 2
+        -세세부 항목 1
+        -세세부 항목 2
+- 두 번째 항목
+- 세 번째 항목
+
+순서가 있는 리스트(order list)는 번호와 점(`.`)을 이용하여 구현합니다
+
+1. 첫 번째 항목
+    1.세부 항목 1
+    2.세부 항목 2
+    3.세부 항목 3
+2. 두 번째 항목
+3. 세 번째 항목
