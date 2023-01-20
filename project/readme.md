@@ -44,3 +44,8 @@ sysout.out.prinln("hello world");
 # 링크
 
 [여기](https://www.google.com)를 누르면 구글로 이동합니다.
+
+# 이미지
+
+링크 표시 앞에 '!'를 붙이면 
+![옥토캣](https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/543V/image/mdDAJAz7IwslIBY_piBkpgocZVA.PNG)
