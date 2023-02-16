@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <h1>마이페이지</h1>
@@ -45,21 +46,33 @@
 		</tr>
 		<tr>
 			<th>가입일</th>
-			<td>${memberDto.memberJoin}</td>
+			<td>
+				<fmt:formatDate value="${memberDto.memberJoin}"
+						pattern="y년 M월 d일 E a h시 m분 s초"/>
+			</td>
 		</tr>
 		<tr>
 			<th>최종 로그인</th>
-			<td>${memberDto.memberLogin}</td>
+			<td>
+				<fmt:formatDate value="${memberDto.memberLogin}"
+						pattern="y년 M월 d일 E a h시 m분 s초"/>
+			</td>
 		</tr>
 	</tbody>
 </table>
 
-
 <!-- 회원 관리 메뉴 -->
 <h2><a href="password">비밀번호 변경</a></h2>
-<h2><a href="#">개인정보 변경</a></h2>
-<h2><a href="#">회원탈퇴</a></h2>
+<h2><a href="edit">개인정보 변경</a></h2>
+<h2><a href="exit">회원 탈퇴</a></h2>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
+
+
+
+
+
+
 
 

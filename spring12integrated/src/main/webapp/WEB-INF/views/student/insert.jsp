@@ -1,20 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 	<h1>학생 정보 등록</h1>
 	<form action="insert" method="post">
-		번호<input name="no"><br>
-		이름<input name="name"><br>
-		국어<input name="korean"><br>
-		영어<input name="english"><br>
-		수학<input name="math"><br>
-	<button>입력</button>	
+		이름 : <input type="text" name="name" required> <br><br>
+		국어 : <input type="text" name="korean"  required> <br><br>
+		영어 : <input type="text" name="english"  required> <br><br>
+		수학 : <input type="text" name="math"  required> <br><br>
+		<button>등록</button>
 	</form>
-</body>
-</html>
+
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
+
+
+
+

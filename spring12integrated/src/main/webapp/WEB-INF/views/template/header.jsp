@@ -38,9 +38,14 @@
 	</c:choose>
 	
 	
-	<a href="/pocketmon/list">포켓몬관리</a>
-	<a href="/subject/list">과목관리</a>
-	<a href="/student/list">학생관리</a>
+	<a href="/pocketmon/list">포켓몬</a>
+	<a href="/subject/list">과목</a>
+	<a href="/student/list">학생</a>
+	<a href="/board/list">게시판</a>
+	
+	<c:if test="${memberLevel == '관리자'}">
+		<a href="/admin/home">관리자모드</a>
+	</c:if>
 	<hr>
 	
 	

@@ -74,28 +74,116 @@ public class MemberDao {
 		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
+//	비밀번호 변경 기능
 	public boolean changePassword(String memberId, String memberPw) {
-		String sql = "update member set member_pw=? where member_id=?";
+		String sql = "update member set member_pw = ? where member_id = ?";
 		Object[] param = {memberPw, memberId};
-		return jdbcTemplate.update(sql,param)>0;
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
-	//비밀번호를 제외한 나머지 정보 변경 기능
+//	비밀번호를 제외한 나머지 정보 변경 기능
 	public boolean changeInformation(MemberDto memberDto) {
-		String sql = "update member set"
-				+ "member_nick=?, member_tel=?, "
-				+ "member_email=?, member_birth=?, "
-				+ "member_post=?, member_basic_addr=?, "
-				+ "member_detail_addr=?"
-				+ " where member_id=?";
-		
+		String sql = "update member set "
+						+ "member_nick=?, member_tel=?, "
+						+ "member_email=?, member_birth=?, "
+						+ "member_post=?, member_basic_addr=?, "
+						+ "member_detail_addr=? "
+						+ "where member_id = ?";
 		Object[] param = {
-				memberDto.getMemberNick(), memberDto.getMemberTel(),
-				memberDto.getMemberEmail(), memberDto.getMemberBirth(),
-				memberDto.getMemberPost(), memberDto.getMemberBasicAddr(),
-				memberDto.getMemberDetailAddr(), memberDto.getMemberId()	
+			memberDto.getMemberNick(), memberDto.getMemberTel(),
+			memberDto.getMemberEmail(), memberDto.getMemberBirth(),
+			memberDto.getMemberPost(), memberDto.getMemberBasicAddr(),
+			memberDto.getMemberDetailAddr(), memberDto.getMemberId()
 		};
-		return jdbcTemplate.update(sql, param)>0;
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+
+//	회원 삭제(탈퇴)
+	public boolean delete(String memberId) {
+		String sql = "delete member where member_id = ?";
+		Object[] param = {memberId};
+		return jdbcTemplate.update(sql, param) > 0;
+	}
+	
+//	닉네임, 전화번호, 생년월일로 아이디 찾기
+	public String findId(MemberDto memberDto) {
+		String sql = "select member_id from member "
+				+ "where member_nick=? and member_tel=? and member_birth=?";
+		Object[] param = {
+			memberDto.getMemberNick(), memberDto.getMemberTel(),
+			memberDto.getMemberBirth()
+		};
+		//String.class는 한글로 "String 자료형"이라는 뜻이다
+		return jdbcTemplate.queryForObject(sql, String.class, param);
+	}
+	
+//	목록 및 검색 
+//	- 페이지 번호(page)와 페이지 크기(size)를 이용하여 계산
+//	- Top N Query 사용
+	public List<MemberDto> selectListPaging(int page, int size) {
+		int end = page * size;
+		int begin = end - (size-1);
+		String sql = "select * from ("
+							+ "select TMP.*, rownum RN from ("
+								+ "select * from member order by member_id asc"
+							+ ")TMP"
+						+ ") where rn between ? and ?";
+		Object[] param = {begin, end};
+		return jdbcTemplate.query(sql, mapper, param);
+	}
+	
+//	카운트 구하는 기능
+	public int selectCount() {
+		String sql = "select count(*) from member";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
+	
+	public void insertWaiting(MemberDto memberDto) {
+		String sql = "insert into waiting("
+				+ "member_id, member_pw, member_nick,"
+				+ "member_tel, member_email, member_birth,"
+				+ "member_post, member_basic_addr, member_detail_addr,"
+				+ "member_level, member_point, member_join, member_login"
+			+ ") values("
+				+ "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"
+			+ ")";
+		Object[] param = {
+			memberDto.getMemberId(), memberDto.getMemberPw(),
+			memberDto.getMemberNick(), memberDto.getMemberTel(),
+			memberDto.getMemberEmail(), memberDto.getMemberBirth(),
+			memberDto.getMemberPost(), memberDto.getMemberBasicAddr(),
+			memberDto.getMemberDetailAddr(), memberDto.getMemberLevel(),
+			memberDto.getMemberPoint(), memberDto.getMemberJoin(),
+			memberDto.getMemberLogin()
+		};
+		jdbcTemplate.update(sql, param);
+	}
+	
+//	관리자용 회원 정보 변경
+	public boolean changeInformationByAdmin(MemberDto memberDto) {
+		String sql = "update member set "
+						+ "member_nick=?, member_tel=?, member_birth=?,"
+						+ "member_email=?, member_post=?, member_basic_addr=?,"
+						+ "member_detail_addr=?, member_level=?, member_point=? "
+						+ "where member_id = ?";
+		Object[] param = {
+			memberDto.getMemberNick(), memberDto.getMemberTel(),
+			memberDto.getMemberBirth(), memberDto.getMemberEmail(),
+			memberDto.getMemberPost(), memberDto.getMemberBasicAddr(),
+			memberDto.getMemberDetailAddr(), memberDto.getMemberLevel(),
+			memberDto.getMemberPoint(), memberDto.getMemberId()
+		};
+		return jdbcTemplate.update(sql, param) > 0;
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
